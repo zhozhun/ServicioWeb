@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Inicio de sesión</title>
+</head>
+<body>
+  <h1>Inicio de sesión</h1>
+  <div id="message"></div>
+  <form>
+    <label for="username">Usuario:</label>
+    <input type="text" id="username" name="username" required><br><br>
+    <label for="password">Contraseña:</label>
+    <input type="password" id="password" name="password" required><br><br>
+    <button id="loginBtn">Iniciar sesión</button>
+  </form>
+
+  <script>
+    document.getElementById('loginBtn').addEventListener('click', async function(event) {
+      event.preventDefault();
+      
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      const response = await fetch('/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+      const messageElement = document.getElementById('message');
+      messageElement.textContent = data.message;
+    });
+  </script>
+</body>
+</html>
